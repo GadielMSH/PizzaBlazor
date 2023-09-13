@@ -34,9 +34,9 @@
             {
                 @foreach (var item in ingredientes)
                 {
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
+                    <div class="form-check" >
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" @onchange="eventArg => {IngSel(item, eventArg);}">
+                    <label class="form-check-label"> 
                         @item.Nombre
                     </label>
                     </div>
@@ -51,6 +51,12 @@
         <br />
         @tipoSeleccionado.Tipo
         @tipoSeleccionado.Precio
+        <br />
+        Ingredientes
+        @costoIng
+        <br />
+        Precio total
+        @totalPizza
     </div>
 </div>
 
@@ -58,9 +64,11 @@
     List<Tamanos> tamanos = new List<Tamanos>();
     List<TipoMasa> tiposMasa = new List<TipoMasa>();
     List<Ingrediente> ingredientes = new List<Ingrediente>();
+    List<Ingrediente> ingredientesSel = new List<Ingrediente>();
     Tamanos tamanoSeleccionado = new Tamanos();
     TipoMasa tipoSeleccionado = new TipoMasa();
-    Ingrediente ingredienteSeleccionado = new Ingrediente();
+    float costoIng = 0.0f;
+    float totalPizza = 0.0f;
 
     protected override async Task OnInitializedAsync()
     {
@@ -106,13 +114,23 @@
 
         tipoSeleccionado = tiposMasa.Where(tamano => tamano.Id == idint).FirstOrDefault();
     }
-    private void IngredientesFunc(ChangeEventArgs args)
+    private void IngSel(Ingrediente ingrediente, ChangeEventArgs args)
     {
-        var prueba = args;
-        string id = prueba.Value.ToString();
-        int idint = int.Parse(id);
+        bool prueba = bool.Parse(args.Value.ToString());
+        var ingredienteSeleccionado = ingrediente;
 
-        ingredienteSeleccionado = ingredientes.Where(tamano => tamano.Id == idint).FirstOrDefault();
+        if(prueba)
+        {
+            ingredientesSel.Add(ingrediente);
+            costoIng = costoIng + ingrediente.Precio;
+        }
+        else
+        {
+            ingredientesSel.Remove(ingrediente);
+            costoIng = costoIng - ingrediente.Precio;
+        }
+
+        totalPizza = tamanoSeleccionado.Precio + tipoSeleccionado.Precio + costoIng;
     }
 }
 
