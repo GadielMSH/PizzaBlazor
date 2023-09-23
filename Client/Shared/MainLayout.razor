@@ -1,16 +1,33 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
+<div class="page" >
     <div class="sidebar">
         <NavMenu />
     </div>
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+        <div class="row px-4" style="background-color:#F3F3F3">
+            <div class="col-2">
+                <img src="/images/3.jpg" class="img-thumbnail" alt="Eniun" width="140" height="140">
+            </div>
 
-        <article class="content px-4">
+            <div class="col-10">
+                <p>
+                    <h1>
+                        <font face="Georgia"> Little  Nero´s Pizza </font>
+                    </h1>
+                    <h2>
+                        <small>
+                            <font face="Arial Black" color="#CD5C5C"> NO FIDDLIN' AROUND! </font>
+                        </small>
+                    </h2>
+                </p>
+            
+            </div>
+        </div>
+        <br />
+
+        <article>
             @Body
         </article>
     </main>
